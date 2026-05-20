@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="uk" id="page-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-ua="Герої | Dota 2 Universe" data-en="Heroes | Dota 2 Universe">Герої | Dota 2 Universe</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- АНІМАЦІЇ --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- БАЗОВІ СТИЛІ --- */
+        .search-wrapper {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        #hero-search {
+            padding: 12px 20px;
+            width: 300px;
+            background: #1c2127;
+            border: 2px solid #444;
+            border-radius: 25px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #hero-search:focus {
+            width: 450px;
+            border-color: #a42323;
+            background: #252a30;
+            box-shadow: 0 0 20px rgba(164, 35, 35, 0.4);
+        }
+
+        .filter-nav {
+            margin-bottom: 30px;
+            text-align: center;
+            background: rgba(22, 25, 29, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            border-bottom: 2px solid #a42323;
+        }
+
+        .filter-btn {
+            background: #2a2f36;
+            color: white;
+            border: 1px solid #444;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #a42323;
+            border-color: #ffb400;
+            transform: translateY(-2px);
+        }
+
+        .heroes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .hero-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            opacity: 0; 
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        .hero-card-item {
+            background: #1c2127;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .hero-card-item:hover {
+            border-color: #ffb400;
+            transform: scale(1.08) translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(164, 35, 35, 0.3);
+            z-index: 10;
+        }
+
+        .hero-card-item img.hero-portrait {
+            width: 100%;
+            display: block;
+            transition: filter 0.3s ease;
+        }
+
+        .hero-card-item:hover img.hero-portrait {
+            filter: brightness(1.2);
+        }
+
+        .hero-info {
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .attr-icon {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-card-item:hover .attr-icon {
+            transform: rotate(360deg);
+        }
+
+        .hero-name {
+            font-weight: bold;
+            color: #f1f1f1;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Елементи перемикача мов */
+        .lang-switcher {
+            display: flex;
+            gap: 5px;
+            margin-left: 20px;
+        }
+
+        .lang-btn {
+            background: #2a2f36;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .lang-btn.active {
+            background: #a42323;
+            border-color: #ffb400;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <h1><span data-ua="ГЕРОЇ" data-en="HEROES">ГЕРОЇ</span> <span class="subtitle">Universe</span></h1>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="Index.html" data-ua="Головна" data-en="Home">Головна</a></li>
+                    <li><a href="heroes.html" class="active" data-ua="Герої" data-en="Heroes">Герої</a></li>
+                    <li><a href="news.html" data-ua="Новини" data-en="News">Новини</a></li>
+                    <li><a href="Index.html#about" data-ua="Про гру" data-en="About">Про гру</a></li>
+                    <li><a href="Index.html#join" data-ua="Спільнота" data-en="Community">Спільнота</a></li>
+                </ul>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" id="btn-ua" onclick="changeLanguage('uk')">UA</button>
+                    <button class="lang-btn" id="btn-en" onclick="changeLanguage('en')">EN</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section>
+            <div class="filter-nav">
+                <div class="search-wrapper">
+                    <input type="text" id="hero-search" placeholder="Пошук героя...">
+                </div>
+
+                <button class="filter-btn active" data-type="all" data-ua="Усі" data-en="All">Усі</button>
+                <button class="filter-btn" data-type="str" data-ua="Сила" data-en="Strength">Сила</button>
+                <button class="filter-btn" data-type="agi" data-ua="Спритність" data-en="Agility">Спритність</button>
+                <button class="filter-btn" data-type="int" data-ua="Інтелект" data-en="Intelligence">Інтелект</button>
+                <button class="filter-btn" data-type="uni" data-ua="Універсальні" data-en="Universal">Універсальні</button>
+            </div>
+
+            <div class="heroes-grid" id="heroes-container"></div>
+        </section>
+    </main>
+
+    <script>
+        // Додано переклад імен (ua) для коректного відображення та розумного пошуку
+        const heroes = [
+            { n: "Abaddon", ua: "Абаддон", t: "uni", i: "abaddon" }, { n: "Alchemist", ua: "Алхімік", t: "str", i: "alchemist" },
+            { n: "Ancient Apparition", ua: "Еншент Апарішн", t: "int", i: "ancient_apparition" }, { n: "Anti-Mage", ua: "Анті-Мейдж", t: "agi", i: "antimage" },
+            { n: "Arc Warden", ua: "Арк Варден", t: "agi", i: "arc_warden" }, { n: "Axe", ua: "Акс", t: "str", i: "axe" },
+            { n: "Bane", ua: "Бейн", t: "uni", i: "bane" }, { n: "Batrider", ua: "Бетрайдер", t: "uni", i: "batrider" },
+            { n: "Beastmaster", ua: "Бістмастер", t: "uni", i: "beastmaster" }, { n: "Bloodseeker", ua: "Бладсікер", t: "agi", i: "bloodseeker" },
+            { n: "Bounty Hunter", ua: "Баунті Хантер", t: "agi", i: "bounty_hunter" }, { n: "Brewmaster", ua: "Брюмастер", t: "uni", i: "brewmaster" },
+            { n: "Bristleback", ua: "Брістлбек", t: "str", i: "bristleback" }, { n: "Broodmother", ua: "Брудмазер", t: "uni", i: "broodmother" },
+            { n: "Centaur Warrunner", ua: "Кентавр", t: "str", i: "centaur" }, { n: "Chaos Knight", ua: "Хаос Найт", t: "str", i: "chaos_knight" },
+            { n: "Chen", ua: "Чен", t: "int", i: "chen" }, { n: "Clinkz", ua: "Клінкз", t: "agi", i: "clinkz" },
+            { n: "Clockwerk", ua: "Клокверк", t: "uni", i: "rattletrap" }, { n: "Crystal Maiden", ua: "Крістал Мейден", t: "int", i: "crystal_maiden" },
+            { n: "Dark Seer", ua: "Дарк Сір", t: "uni", i: "dark_seer" }, { n: "Dark Willow", ua: "Дарк Віллоу", t: "uni", i: "dark_willow" },
+            { n: "Dawnbreaker", ua: "Донбрейкер", t: "str", i: "dawnbreaker" }, { n: "Dazzle", ua: "Даззл", t: "uni", i: "dazzle" },
+            { n: "Death Prophet", ua: "Банша", t: "int", i: "death_prophet" }, { n: "Disruptor", ua: "Дісраптор", t: "int", i: "disruptor" },
+            { n: "Doom", ua: "Дум", t: "str", i: "doom_bringer" }, { n: "Dragon Knight", ua: "Драгон Найт", t: "str", i: "dragon_knight" },
+            { n: "Drow Ranger", ua: "Тракса", t: "agi", i: "drow_ranger" }, { n: "Earth Spirit", ua: "Земляний Спіріт", t: "str", i: "earth_spirit" },
+            { n: "Earthshaker", ua: "Шейкер", t: "str", i: "earthshaker" }, { n: "Elder Titan", ua: "Елдер Тітан", t: "str", i: "elder_titan" },
+            { n: "Ember Spirit", ua: "Ембер Спіріт", t: "agi", i: "ember_spirit" }, { n: "Enchantress", ua: "Енчантрес", t: "int", i: "enchantress" },
+            { n: "Enigma", ua: "Енігма", t: "uni", i: "enigma" }, { n: "Faceless Void", ua: "Войд", t: "agi", i: "faceless_void" },
+            { n: "Grimstroke", ua: "Грімстроук", t: "int", i: "grimstroke" }, { n: "Gyrocopter", ua: "Гірокоптер", t: "agi", i: "gyrocopter" },
+            { n: "Hoodwink", ua: "Білка", t: "agi", i: "hoodwink" }, { n: "Huskar", ua: "Хускар", t: "str", i: "huskar" },
+            { n: "Invoker", ua: "Інвокер", t: "uni", i: "invoker" }, { n: "Io", ua: "Вісп", t: "uni", i: "wisp" },
+            { n: "Jakiro", ua: "Джакіро", t: "int", i: "jakiro" }, { n: "Juggernaut", ua: "Джаггернаут", t: "agi", i: "juggernaut" },
+            { n: "Kez", ua: "Кез", t: "agi", i: "kez" }, { n: "Kunkka", ua: "Кунка", t: "str", i: "kunkka" },
+            { n: "Legion Commander", ua: "Легіонка", t: "str", i: "legion_commander" }, { n: "Leshrac", ua: "Лешрак", t: "int", i: "leshrac" },
+            { n: "Lich", ua: "Ліч", t: "int", i: "lich" }, { n: "Lifestealer", ua: "Гуля", t: "str", i: "life_stealer" },
+            { n: "Lina", ua: "Ліна", t: "int", i: "lina" }, { n: "Lion", ua: "Ліон", t: "int", i: "lion" },
+            { n: "Lone Druid", ua: "Лон Друїд", t: "uni", i: "lone_druid" }, { n: "Luna", ua: "Луна", t: "agi", i: "luna" },
+            { n: "Lycan", ua: "Лікан", t: "uni", i: "lycan" }, { n: "Magnus", ua: "Магнус", t: "uni", i: "magnataur" },
+            { n: "Marci", ua: "Марсі", t: "str", i: "marci" }, { n: "Mars", ua: "Марс", t: "str", i: "mars" },
+            { n: "Medusa", ua: "Медуза", t: "agi", i: "medusa" }, { n: "Meepo", ua: "Міпо", t: "agi", i: "meepo" },
+            { n: "Mirana", ua: "Мірана", t: "uni", i: "mirana" }, { n: "Monkey King", ua: "Монкі Кінг", t: "agi", i: "monkey_king" },
+            { n: "Morphling", ua: "Морф", t: "agi", i: "morphling" }, { n: "Muerta", ua: "Муерта", t: "int", i: "muerta" },
+            { n: "Naga Siren", ua: "Нага", t: "agi", i: "naga_siren" }, { n: "Nature's Prophet", ua: "Фуріон", t: "int", i: "natures_prophet" },
+            { n: "Necrophos", ua: "Некрофос", t: "int", i: "necrolyte" }, { n: "Night Stalker", ua: "Баланар", t: "str", i: "night_stalker" },
+            { n: "Nyx Assassin", ua: "Нікс", t: "uni", i: "nyx_assassin" }, { n: "Ogre Magi", ua: "Огр Маг", t: "str", i: "ogre_magi" },
+            { n: "Omniknight", ua: "Омнік", t: "str", i: "omniknight" }, { n: "Oracle", ua: "Оракул", t: "int", i: "oracle" },
+            { n: "Outworld Destroyer", ua: "ОД", t: "int", i: "obsidian_destroyer" }, { n: "Pangolier", ua: "Панго", t: "uni", i: "pangolier" },
+            { n: "Phantom Assassin", ua: "Фантомка", t: "agi", i: "phantom_assassin" }, { n: "Phantom Lancer", ua: "Лансер", t: "agi", i: "phantom_lancer" },
+            { n: "Phoenix", ua: "Фенікс", t: "uni", i: "phoenix" }, { n: "Primal Beast", ua: "Прімал Біст", t: "str", i: "primal_beast" },
+            { n: "Puck", ua: "Пак", t: "int", i: "puck" }, { n: "Pudge", ua: "Пуджуха", t: "str", i: "pudge" },
+            { n: "Pugna", ua: "Пугна", t: "int", i: "pugna" }, { n: "Queen of Pain", ua: "Квопа", t: "int", i: "queenofpain" },
+            { n: "Razor", ua: "Рейзор", t: "agi", i: "razor" }, { n: "Riki", ua: "Рікі", t: "agi", i: "riki" },
+            { n: "Rubick", ua: "Рубік", t: "int", i: "rubick" }, { n: "Sand King", ua: "СК", t: "uni", i: "sand_king" },
+            { n: "Shadow Demon", ua: "Шедоу Демон", t: "int", i: "shadow_demon" }, { n: "Shadow Fiend", ua: "СФ", t: "agi", i: "nevermore" },
+            { n: "Shadow Shaman", ua: "Раста", t: "int", i: "shadow_shaman" }, { n: "Silencer", ua: "Саленсер", t: "int", i: "silencer" },
+            { n: "Skywrath Mage", ua: "Скаймаг", t: "int", i: "skywrath_mage" }, { n: "Slardar", ua: "Сладар", t: "str", i: "slardar" },
+            { n: "Slark", ua: "Сларк", t: "agi", i: "slark" }, { n: "Snapfire", ua: "Бабця", t: "uni", i: "snapfire" },
+            { n: "Sniper", ua: "Снайпер", t: "agi", i: "sniper" }, { n: "Spectre", ua: "Спектра", t: "agi", i: "spectre" },
+            { n: "Spirit Breaker", ua: "Бара", t: "str", i: "spirit_breaker" }, { n: "Storm Spirit", ua: "Шторм", t: "int", i: "storm_spirit" },
+            { n: "Sven", ua: "Свен", t: "str", i: "sven" }, { n: "Techies", ua: "Мінери", t: "uni", i: "techies" },
+            { n: "Templar Assassin", ua: "Ланая", t: "agi", i: "templar_assassin" }, { n: "Terrorblade", ua: "ТБ", t: "agi", i: "terrorblade" },
+            { n: "Tidehunter", ua: "Тайдхунтер", t: "str", i: "tidehunter" }, { n: "Timbersaw", ua: "Тімбер", t: "uni", i: "shredder" },
+            { n: "Tinker", ua: "Тінкер", t: "int", i: "tinker" }, { n: "Tiny", ua: "Тіні", t: "str", i: "tiny" },
+            { n: "Treant Protector", ua: "Дерево", t: "str", i: "treant" }, { n: "Troll Warlord", ua: "Троль", t: "agi", i: "troll_warlord" },
+            { n: "Tusk", ua: "Таск", t: "str", i: "tusk" }, { n: "Underlord", ua: "Андерлорд", t: "str", i: "abyssal_underlord" },
+            { n: "Undying", ua: "Зомбі", t: "str", i: "undying" }, { n: "Ursa", ua: "Урса", t: "agi", i: "ursa" },
+            { n: "Vengeful Spirit", ua: "Венга", t: "uni", i: "vengefulspirit" }, { n: "Venomancer", ua: "Веномансер", t: "uni", i: "venomancer" },
+            { n: "Viper", ua: "Вайпер", t: "agi", i: "viper" }, { n: "Visage", ua: "Візаж", t: "uni", i: "visage" },
+            { n: "Void Spirit", ua: "Войд Спіріт", t: "uni", i: "void_spirit" }, { n: "Warlock", ua: "Варлок", t: "int", i: "warlock" },
+            { n: "Weaver", ua: "Вівер", t: "agi", i: "weaver" }, { n: "Windranger", ua: "ВРка", t: "uni", i: "windrunner" },
+            { n: "Winter Wyvern", ua: "Віверна", t: "uni", i: "winter_wyvern" }, { n: "Witch Doctor", ua: "ВД", t: "int", i: "witch_doctor" },
+            { n: "Wraith King", ua: "ВК", t: "str", i: "skeleton_king" }, { n: "Zeus", ua: "Зевс", t: "int", i: "zuus" }
+        ];
+
+        const container = document.getElementById('heroes-container');
+        const buttons = document.querySelectorAll('.filter-btn');
+        const searchInput = document.getElementById('hero-search');
+
+        const attrIcons = {
+            str: "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/icons/hero_strength.png",
+            agi: "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/icons/hero_agility.png",
+            int: "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/icons/hero_intelligence.png",
+            uni: "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/icons/hero_universal.png"
+        };
+
+        let currentType = 'all';
+        let currentLang = 'uk'; // Базова мова сторінки
+
+        function renderHeroes() {
+            const query = searchInput.value.toLowerCase().trim();
+            container.innerHTML = '';
+
+            let visibleIndex = 0;
+
+            heroes.forEach(h => {
+                const matchesType = currentType === 'all' || h.t === currentType;
+                
+                // Розумний пошук: шукає одночасно і за англійською, і за українською назвою
+                const matchesSearch = h.n.toLowerCase().includes(query) || h.ua.toLowerCase().includes(query);
+
+                if (matchesType && matchesSearch) {
+                    const heroLink = document.createElement('a');
+                    heroLink.href = `https://www.dota2.com/hero/${h.i}`;
+                    heroLink.target = "_blank";
+                    heroLink.className = 'hero-link';
+                    
+                    heroLink.style.animationDelay = `${visibleIndex * 0.02}s`;
+                    visibleIndex++;
+
+                    // Визначаємо, яку назву виводити на картку залежно від мови
+                    const displayName = currentLang === 'uk' ? h.ua : h.n;
+
+                    heroLink.innerHTML = `
+                        <div class="hero-card-item">
+                            <img src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/${h.i}.png" class="hero-portrait" alt="${displayName}">
+                            <div class="hero-info">
+                                <img src="${attrIcons[h.t]}" class="attr-icon" title="${h.t}">
+                                <div class="hero-name">${displayName}</div>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(heroLink);
+                }
+            });
+        }
+
+        // Функція зміни мови
+        function changeLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('page-html').setAttribute('lang', lang);
+
+            if (lang === 'uk') {
+                document.getElementById('btn-ua').classList.add('active');
+                document.getElementById('btn-en').classList.remove('active');
+                searchInput.placeholder = "Пошук героя...";
+            } else {
+                document.getElementById('btn-en').classList.add('active');
+                document.getElementById('btn-ua').classList.remove('active');
+                searchInput.placeholder = "Search hero...";
+            }
+
+            // Переклад статичних елементів інтерфейсу
+            const elements = document.querySelectorAll('[data-ua]');
+            elements.forEach(el => {
+                el.innerHTML = lang === 'uk' ? el.getAttribute('data-ua') : el.getAttribute('data-en');
+            });
+
+            // Перемальовуємо сітку героїв з новими іменами
+            renderHeroes();
+        }
+
+        // Обробники для кнопок фільтрації атрибутів
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                buttons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentType = btn.dataset.type;
+                renderHeroes();
+            });
+        });
+
+        searchInput.addEventListener('input', renderHeroes);
+
+        // Початковий рендер
+        renderHeroes();
+    </script>
+</body>
+</html>

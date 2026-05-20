@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="uk" id="page-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-ua="Dota 2 Universe | Новини" data-en="Dota 2 Universe | News">Dota 2 Universe | Новини</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Стилі для сторінки новин */
+        .news-page {
+            background-color: #1c1e21;
+            color: #b0b0b0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 40px 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .page-title {
+            text-align: center;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+        }
+
+        /* Сітка для карток новин */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        /* Картка новини */
+        .news-card {
+            background: #111215;
+            border: 1px solid #282c34;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            border-color: #f55520;
+            box-shadow: 0 5px 15px rgba(245, 85, 32, 0.2);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid #282c34;
+        }
+
+        .news-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .news-date {
+            font-size: 12px;
+            color: #ffd700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .news-card h3 {
+            color: #fff;
+            margin: 0 0 12px 0;
+            font-size: 18px;
+            line-height: 1.4;
+        }
+
+        .news-card p {
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0 0 20px 0;
+            color: #99a1af;
+            flex-grow: 1;
+        }
+
+        .read-more {
+            display: inline-block;
+            background: #222;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 13px;
+            border-radius: 4px;
+            border: 1px solid #444;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .read-more:hover {
+            background: #f55520;
+            border-color: #f55520;
+            color: #fff;
+        }
+
+        /* Теги категорій */
+        .news-tag {
+            align-self: flex-start;
+            font-size: 10px;
+            text-transform: uppercase;
+            background: #2b303b;
+            color: #e2e8f0;
+            padding: 3px 8px;
+            border-radius: 3px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        
+        .tag-patch { background: #7d2013; color: #fff; }
+        .tag-esports { background: #13587d; color: #fff; }
+
+        /* Стилі шапки */
+        .lang-switcher { display: flex; gap: 5px; margin-left: 20px; }
+        .lang-btn { background: #222; color: #fff; border: 1px solid #444; padding: 5px 10px; cursor: pointer; font-size: 14px; border-radius: 4px; }
+        .lang-btn.active { background: #f55520; border-color: #f55520; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        nav { display: flex; align-items: center; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <h1>DOTA 2 <span class="subtitle">Universe</span></h1>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="Index.html" data-ua="Головна" data-en="Home">Головна</a></li>
+                    <li><a href="heroes.html" data-ua="Герої" data-en="Heroes">Герої</a></li>
+                    <li><a href="news.html" class="active" data-ua="Новини" data-en="News">Новини</a></li>
+                    <li><a href="Index.html#about" data-ua="Про гру" data-en="About">Про гру</a></li>
+                    <li><a href="#join" data-ua="Спільнота" data-en="Community">Спільнота</a></li>
+                </ul>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" id="btn-ua" onclick="changeLanguage('uk')">UA</button>
+                    <button class="lang-btn" id="btn-en" onclick="changeLanguage('en')">EN</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="news-page">
+        <div class="container">
+            <h2 class="page-title" data-ua="Останні новини світу Dota 2" data-en="Latest Dota 2 News">Останні новини світу Dota 2</h2>
+            
+            <div class="news-grid">
+
+                <article class="news-card">
+                    <img src="https://static.gosugamers.net/d5/5a/84/778e0fa66d70f3e7d1f2828024bc5ac9f819ebbbe21716487e8e027143.webp" alt="Crownfall Update" class="news-image">
+                    <div class="news-content">
+                        <span class="news-tag tag-patch" data-ua="Патч" data-en="Patch">Патч</span>
+                        <span class="news-date">06 травня 2026</span>
+                        <h3 data-ua="Вийшло геймплейне оновлення 7.41c: виправлення Meepo та ілюзій" data-en="Gameplay Update 7.41c is out: Meepo and Illusion fixes">Вийшло геймплейне оновлення 7.41c: виправлення Meepo та ілюзій</h3>
+                        <p data-ua="Valve випустили нове мікро-оновлення, спрямоване на балансування героїв. Виправлено серйозний баг, через який Meepo міг копіювати Healing Salve, а також виправлено помилку з некоректним копіюванням рівнів нейтральних предметів у ілюзій." data-en="Valve released a new micro-update focused on hero balancing. Fixed a major bug where Meepo could duplicate Healing Salves, and resolved an issue with illusion neutral item enchantment scaling.">Valve випустили нове мікро-оновлення, спрямоване на балансування героїв. Виправлено серйозний баг, через який Meepo міг копіювати Healing Salve, а також виправлено помилку з некоректним копіюванням рівнів нейтральних предметів у ілюзій.</p>
+                        <a href="https://www.dota2.com/news" target="_blank" class="read-more" data-ua="До списку змін" data-en="To Changelog">До списку змін</a>
+                    </div>
+                </article>
+
+                <article class="news-card">
+                    <img src="https://clan.akamai.steamstatic.com/images//3703047/2b0dbd8497914662524fb7ed561beb3090d33be7.jpg" alt="The International" class="news-image">
+                    <div class="news-content">
+                        <span class="news-tag tag-esports" data-ua="Кіберспорт" data-en="Esports">Кіберспорт</span>
+                        <span class="news-date">04 травня 2026</span>
+                        <h3 data-ua="The International 2026 офіційно повертається до Китаю" data-en="The International 2026 officially returns to China">The International 2026 офіційно повертається до Китаю</h3>
+                        <p data-ua="Valve офіційно оголосили, що головний кіберспортивний турнір року — The International 2026 — пройде в серпні у Шанхаї. Також розпочато офіційну реєстрацію команд для участі у відкритих регіональних кваліфікаціях." data-en="Valve officially announced that the premier esports tournament of the year, The International 2026, will take place this August in Shanghai. Official team registration for regional qualifiers has also begun.">Valve офіційно оголосили, що головний кіберспортивний турнір року — The International 2026 — пройде в серпні у Шанхаї. Також розпочато офіційну реєстрацію команд для участі у відкритих регіональних кваліфікаціях.</p>
+                        <a href="https://www.dota2.com/news" target="_blank" class="read-more" data-ua="Читати анонс" data-en="Read Announcement">Читати анонс</a>
+                    </div>
+                </article>
+
+                <article class="news-card">
+                    <img src="https://cdnr.escharts.com/uploads/public/696/0c7/fba/6960c7fba711c692947464.png?width=1200&height=630&extension=png" alt="Esports World Cup" class="news-image">
+                    <div class="news-content">
+                        <span class="news-tag tag-esports" data-ua="Турнір" data-en="Tournament">Турнір</span>
+                        <span class="news-date">Травень 2026</span>
+                        <h3 data-ua="Dota 2 повертається на Esports World Cup 2026 в Ер-Ріяді" data-en="Dota 2 returns to Esports World Cup 2026 in Riyadh">Dota 2 повертається на Esports World Cup 2026 in Riyadh</h3>
+                        <p data-ua="Організатори EWC анонсували дати проведення масштабного чемпіонату з Dota 2. Найсильніші колективи світу знову зберуться в Саудівській Аравії з 5 по 17 липня 2026 року, щоб розіграти мільйонні призові фонди." data-en="EWC organizers announced the dates for the massive Dota 2 championship. The world's top teams will gather in Saudi Arabia from July 5 to July 17, 2026, to compete for multi-million dollar prize pools.">Організатори EWC анонсували дати проведення масштабного чемпіонату з Dota 2. Найсильніші колективи світу знову зберуться в Саудівській Аравії з 5 по 17 липня 2026 року, щоб розіграти мільйонні призові фонди.</p>
+                        <a href="https://esportsworldcup.com" target="_blank" class="read-more" data-ua="Деталі турніру" data-en="Tournament Details">Деталі турніру</a>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function changeLanguage(lang) {
+            document.getElementById('page-html').setAttribute('lang', lang);
+
+            if (lang === 'uk') {
+                document.getElementById('btn-ua').classList.add('active');
+                document.getElementById('btn-en').classList.remove('active');
+            } else {
+                document.getElementById('btn-en').classList.add('active');
+                document.getElementById('btn-ua').classList.remove('active');
+            }
+
+            const elements = document.querySelectorAll('[data-ua]');
+            elements.forEach(el => {
+                el.innerHTML = lang === 'uk' ? el.getAttribute('data-ua') : el.getAttribute('data-en');
+            });
+        }
+    </script>
+</body>
+</html>
